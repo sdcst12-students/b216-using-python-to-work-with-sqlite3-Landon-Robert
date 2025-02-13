@@ -23,11 +23,10 @@ Jen Mezei       jen@shaw.ca     6042231134      104     891 Cullen Cresc        
 
 file = 'dbase.db'
 connection = sqlite3.connect(file)
-print(connection)
-
 cursor = connection.cursor()
+cursor.execute('delete from buyers') 
 query = """
-create table if not exists customers (
+create table if not exists buyers (
     name tinytext,
     email tinytext,
     phoneNumber int,
@@ -42,7 +41,14 @@ data = [
     ["Leroy Jenkins", "leroy@wow.ca", 2342222323, 103, "65 Blizzard Ave", 100],
     ["Jen Mezei", "jen@shaw.ca", 6042231134, 104, "891 Cullen Cresc", 0]
 ]
+print("----------------------")
 for i in data:
-    query = f"insert into customers (name,email,phone number, ID, address, balance) values ('{i[0]}','{i[1]}',{i[2]},{i[3]},'{i[4]}',{i[5]});"
-    print(query)
+    query = f"insert into buyers (name,email,phoneNumber,ID,address,balance) values ('{i[0]}','{i[1]}','{i[2]}',{i[3]},'{i[4]}',{i[5]});"
     cursor.execute(query)
+query = "select * from buyers"
+cursor.execute(query)
+connection.commit()
+result = cursor.fetchall()
+print(result)
+for i in result:
+    print(i)
